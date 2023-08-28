@@ -16,7 +16,7 @@ provider "ncloud" {
 }
 
 resource "ncloud_login_key" "loginkey" {
-  key_name = "login-key-${var.env}"
+  key_name = "${var.name}-login-key-${var.env}"
 }
 
 resource "ncloud_server" "server" {
