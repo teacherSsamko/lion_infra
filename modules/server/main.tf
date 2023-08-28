@@ -15,6 +15,10 @@ provider "ncloud" {
   support_vpc = true
 }
 
+data "ncloud_vpc" "main" {
+  id = var.vpc_id
+}
+
 resource "ncloud_login_key" "loginkey" {
   key_name = "${var.name}-login-key-${var.env}"
 }
@@ -58,6 +62,7 @@ resource "ncloud_network_interface" "main" {
   name      = "${var.name}-nic-${var.env}"
   subnet_no = var.subnet_id
   access_control_groups = [
-    ncloud_access_control_group.main.id
+    ncloud_access_control_group.main.id,
+    data.ncloud_vpc.main.default_access_control_group_no,
   ]
 }
