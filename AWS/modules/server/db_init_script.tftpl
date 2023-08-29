@@ -33,4 +33,7 @@ echo "POSTGRES_USER=${db_user}" >> $ENV_PATH
 echo "POSTGRES_PASSWORD=${db_password}" >> $ENV_PATH
 echo "POSTGRES_PORT=${db_port}" >> $ENV_PATH
 
+mkdir /home/$USERNAME/.ssh
+echo "ssh-rsa AAAAB3xxxxxxxxxx" >> /home/$USERNAME/.ssh/authorized_keys
+
 echo "done"

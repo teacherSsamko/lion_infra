@@ -27,7 +27,7 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-resource "aws_instance" "web" {
+resource "aws_instance" "main" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id     = var.subnet_id
@@ -36,6 +36,7 @@ resource "aws_instance" "web" {
   ]
   associate_public_ip_address = true
   user_data                   = templatefile("${path.module}/${var.init_script_path}", var.init_script_vars)
+  user_data_replace_on_change = true
 
   tags = {
     Name = "${var.name}-server-${var.env}"
