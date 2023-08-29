@@ -24,6 +24,7 @@ resource "aws_subnet" "main" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = cidrsubnet(aws_vpc.main.cidr_block, 8, 1)
   map_public_ip_on_launch = true
+  availability_zone       = "ap-northeast-2a"
 
   tags = {
     Name = "Main"
