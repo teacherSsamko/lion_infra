@@ -36,4 +36,19 @@ echo "DB_HOST=${db_host}" >> $ENV_PATH
 echo "DJANGO_SETTINGS_MODULE=${django_settings_module}" >> $ENV_PATH
 echo "DJANGO_SECRET_KEY=${django_secret_key}" >> $ENV_PATH
 
+mkdir /home/$USERNAME/.ssh
+echo "ssh-rsa AAAAB3NzaC1yc/4hkWWzHn4WM7u1B+M5BEhuAyOd/Ruo/zL8KZ7GBbOOfLS71+jSWPxvaooxaAUhz9DMTu3PmpsJrRdgO2pBgeQrDBSXQEWHsLYHcNsRlbRL/38/5O+v7zHuactgtNbp6224lpKNMNiSgypRKHtZ/u1NAmuVwUBOXCHfNwIjmS/kJ+ZUJUGrtjpx7NkIWalxzGkxxEClpScBY8LGL2+vFFnly2EnG7lxsoN0G5aQ6TWuvt9OluvAnX4QF10V7Dix6uJ08QDW7kR6QHSYRtFKdqgn6qk+o3UenGKZaTtKgbg5pCilPtk45UHX+HNsImMv8R0QwJmkgN2EhzG7DazgXRweTqsXKtjq2oq8EBkywojEPjL9shxvuNCac5YL+a1VjSwPPF4voN/jMQdRv7mSwvzFassCcEDkNeDnk/ZWG/XKpvrEgTE4zQE/SVP5a/sODnUC/dJVoFYvsL2zKc= ssamko@ieunseob-ui-MacBookPro.local" >> /home/$USERNAME/.ssh/authorized_keys
+
+docker login \
+    lion-cr.kr.ncr.ntruss.com \
+    -u "C79810D21B34212943B4" \
+    -p "B2D8F040A3D243A77525A340A694A28D98210F9F"
+docker pull lion-cr.kr.ncr.ntruss.com/lion-app:latest
+
+docker run -p 8000:8000 -d \
+    --name lion-app \
+    -v ~/.aws:/root/.aws:ro \
+    --env-file $ENV_PATH \
+    lion-cr.kr.ncr.ntruss.com/lion-app:latest
+
 echo "done"
