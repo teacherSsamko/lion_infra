@@ -40,3 +40,34 @@ module "db_server" {
   }
   port_range = local.db_port
 }
+
+module "be_server" {
+  source = "../modules/server"
+
+  env              = local.env
+  vpc_id           = module.network.vpc_id
+  subnet_id        = module.network.subnet_id
+  name             = "be"
+  init_script_path = "be_init_script.tftpl"
+  init_script_vars = {
+    password               = var.password
+    db                     = "lionforum"
+    db_user                = "lion"
+    db_password            = var.db_password
+    db_port                = local.db_port
+    db_host                = module.db_server.public_ip
+    django_settings_module = "lion_app.settings.staging"
+    django_secret_key      = var.secret_key
+  }
+  port_range = local.be_port
+}
+
+module "be_lb" {
+  source = "../modules/loadBalancer"
+
+  name        = "be"
+  env         = local.env
+  subnet_id   = module.network.subnet_id
+  vpc_id      = module.network.vpc_id
+  instance_id = module.be_server.instance_id
+}
