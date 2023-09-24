@@ -184,6 +184,6 @@ resource "ncloud_nks_node_pool" "node_pool" {
   }
 
   lifecycle {
-    ignore_changes = [node_count]
+    ignore_changes = [node_count, subnet_no_list]
   }
 }
